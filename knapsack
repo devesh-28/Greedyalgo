@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class knapsack {
+    private static int getmax(int []w,int[]v)
+    {
+        int max_i=0;
+        double max=0.0;
+        for(int i=0;i<w.length;i++)
+        {
+            if(w[i]!=0&&(double)v[i]/w[i]>max)
+            {
+                max=(double)v[i]/w[i];
+                max_i=i;
+            }
+        }
+        return max_i;
+    }
+    private static double sack(int capacity,int []v,int []w)
+    {
+        double value=0.0;
+        for(int i=0;i<w.length;i++)
+        {
+            if(capacity==0)
+                return value;
+
+            int index=getmax(w,v);
+            int a=Math.min(capacity,w[index]);
+            value+=a*(double)v[index]/w[index];
+            w[index]-=a;
+            capacity-=a;
+        }
+        return value;
+    }
+    public static void main(String[] args) {
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Entre the size of array");
+        int p=scan.nextInt();
+        System.out.println("Entre the capacity of sack");
+        int capacity=scan.nextInt();
+        int []v=new int[p];
+        int[]w=new int[p];
+        System.out.println("entre the profit");
+        for(int i=0;i<p;i++)
+        {
+            v[i]= scan.nextInt();
+        }
+        System.out.println("entre the weight");
+        for(int i=0;i<p;i++)
+        {
+            w[i]= scan.nextInt();
+        }
+
+        System.out.println(sack(capacity,v,w));
+    }
+}
